@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    include front-navbar.pug
+
+    .container
+        h1.main-title #{title}
+        hr
+        .container
+            .card-deck
+                each product, i in products
+                    .col-md-4.mt-3
+                        .card.custom-card
+                            img.card-img-top(style='width:100%; height:200px; object-fit:cover', src=product.image.slice(6, product.image.length), alt='Card image cap')
+                            .card-body
+                                h5.card-title.font-weight-bold= product.title
+                                p.card-text= product.description.slice(0, 80) +'...'
+                                a.font-weight-bold(href='/products/'+product._id, style='color:black;') Read More
+                            .card-footer.mt-2                                                             
+                                if product.discount
+                                    p.font-weight-bold.d-inline(style='color:black; text-decoration: line-through; font-size:20px')= product.price+'€ '
+                                    p.text-danger.font-weight-bold.d-inline(style='font-size:20px')= product.discount+' €'
+                                else 
+                                    p.font-weight-bold.d-inline(style='color:black; font-size:20px')= product.price+' €'
+                                button#addToCart.btn.btn-outline-dark.btn-sm.float-right(type='button') <i class="fas fa-cart-plus"></i> Add to Cart
+        
+

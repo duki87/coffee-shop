@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    include front-navbar.pug
+
+    .container       
+        .container
+            .row
+                .col-md-4
+                    h2.main-title Other coffees
+                    .list-group
+                        each product, i in products
+                            a.custom-list.list-group-item.list-group-item-action(href='/products/'+product._id)= product.title
+                .col-md-8.my-5.product-box(style="")
+                    h1.main-title #{title}
+                    img(src=product.image.slice(6, product.image.length), alt="")
+                    h4= product.description
+                    h2.font-weight-bold.d-inline(style='color: rgb(255, 255, 0)') Price: 
+                    if product.discount
+                        h2.font-weight-bold.d-inline(style='color:black; text-decoration: line-through;')= product.price+'€ '
+                        h2.text-danger.font-weight-bold.d-inline(style='')= product.discount+' €'
+                    else 
+                        h2.font-weight-bold.d-inline(style='color:black;')= product.price+' €'
+                
+                    button#addToCart.btn.btn-outline-dark.float-right(type='button') <i class="fas fa-cart-plus"></i> Add to Cart
+
+
+
+        
+

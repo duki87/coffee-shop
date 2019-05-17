@@ -1,0 +1,32 @@
+{
+  "name": "coffee",
+  "version": "1.0.0",
+  "description": "Coffee Shop App",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duki87/coffee.git"
+  },
+  "keywords": [
+    "coffee",
+    "shop",
+    "app"
+  ],
+  "author": "Dusan Marinkovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duki87/coffee/issues"
+  },
+  "homepage": "https://github.com/duki87/coffee#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "form-data": "^2.3.3",
+    "mongoose": "^5.5.8",
+    "multer": "^1.4.1",
+    "nodemon": "^1.19.0",
+    "pug": "^2.0.3"
+  }
+}

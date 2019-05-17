@@ -1,0 +1,17 @@
+extends layout
+
+block content   
+    include admin-navbar.pug
+
+    .container
+        h1 #{title}
+        hr
+        ul.list-group
+            each product, i in products
+                li.list-group-item= product.title
+                    a.btn.btn-primary.float-right(href='/admin/products/manage-products/'+product._id, type='button') View
+                    a.btn.btn-warning.float-right.mr-2(href='', type='button') Edit
+                    a.btn.btn-danger.float-right.mr-2(href='/admin/products/delete-product/'+product._id, type='button') Delete
+
+
+

@@ -1,0 +1,16 @@
+extends layout
+
+block content   
+    include admin-navbar.pug
+
+    .container
+        h1 #{title}
+        hr
+        p= product.title
+        p= product.description
+        p= product.image
+        p= product.stock
+        p= product.price
+
+
+

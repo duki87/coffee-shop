@@ -1,0 +1,46 @@
+extends layout
+
+block content
+    include front-navbar.pug
+   
+    .container
+        h1.main-title #{title}
+        .row
+            .col-md-8.mx-auto.my-5
+                table.table.table-hover(style='background-color: rgba(255, 255, 0, 0.7)')
+                    thead
+                        tr
+                            th(scope='col') #
+                            th(scope='col') Product
+                            th(scope='col') Price
+                            th(scope='col') Quantity
+                            th(scope='col') Sub Total
+                            th.text-center(scope='col') Delete Item
+                    tbody
+                        tr
+                            th(scope='row') 1
+                            td Mark
+                            td Otto
+                            td @
+                            td @mdo
+                            td.text-center
+                                button.btn.btn-outline-danger X
+                        tr
+                            th(scope='row') 2
+                            td Jacob
+                            td Thornton
+                            td @fat
+                            td @mdo
+                            td.text-center 
+                                button.btn.btn-outline-danger X
+                        tr
+                            th(scope='row') 3
+                            td(colspan='2') Larry the Bird
+                            td @twitter
+                            td @mdo
+                            td.text-center
+                                button.btn.btn-outline-danger X
+                br
+                button.btn.btn-outline-warning Check Out
+                button.btn.btn-outline-danger.ml-2 Delete All
+                
