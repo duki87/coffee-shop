@@ -1,33 +1,32 @@
-extends layout
+extends admin-layout
 
 block content   
-    include admin-navbar.pug
 
     .container
-        h1 #{title}
+        h1.main-title #{title}
         hr
         form(method='POST', action='/admin/products/add-product', enctype='multipart/form-data')
             .form-group
-                label(for='title') Title
-                input#title.form-control(type='text', placeholder='product title', name='title', required)
+                label.input-label(for='title') Title
+                input#title.form-control(type='text', placeholder='product title', name='title')
             .form-group
-                label(for='description') Description
-                textarea#title.form-control(placeholder='product description', name='description', required)
+                label.input-label(for='description') Description
+                textarea#title.form-control(placeholder='product description', name='description')
             .form-group
-                label(for='price') Price
-                input#price.form-control(type='text', placeholder='product price', name='price', required)
+                label.input-label(for='price') Price
+                input#price.form-control(type='text', placeholder='product price', name='price')
             .form-group
-                label(for='discount') Discount
+                label.input-label(for='discount') Discount
                 input#price.form-control(type='text', placeholder='product discount', name='discount')
             .form-group
-                label(for='stock') On Stock 
+                label.input-label(for='stock') On Stock 
                 br
                 input#price(type='checkbox', value='true', name='stock', checked)                
             .form-group
-                label(for='image') Image
-                input#image.form-control(type='file', placeholder='product image', name='image', required)
+                label.input-label(for='image') Image
+                input#image.form-control(type='file', placeholder='product image', name='image')
             .form-group#previewImg
-                label(for='') Image Preview
+                label.input-label(for='') Image Preview
                 br
                 img#preview(src="", alt="" style="width:150px; height:auto;")
             .form-group.d-none#removeImg

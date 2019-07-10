@@ -43,6 +43,7 @@ router.get('/delete-product/:id', (req, res, next) => {
     let id = req.params.id;
     Product.findByIdAndDelete(id).then(deletedProduct => {
         if(deletedProduct) {
+            req.flash('success', 'Product Deleted!');
             res.redirect('/admin/products/manage-products');
         } else {
             console.log('SOMETHING WENT WRONG');
@@ -82,14 +83,29 @@ router.post('/add-product', upload.single('image'), (req, res, next) => {
     product.price = req.body.price;
     product.discount = req.body.discount;
     product.stock = req.body.stock;
-    product.image = req.file.path; 
-    product.save((err) => {
-        if(err) {
-            console.log(err);
-        } else {
-            res.redirect('/admin/products/manage-products');
-        }
-    });
+     
+    req.checkBody('title', 'Title is required!').notEmpty();
+    req.checkBody('description', 'Description is required!').notEmpty();
+    req.checkBody('price', 'Price is required!').notEmpty();
+    req.checkBody('price', 'Price must be a number greater than 0!').isInt({ gt: 0 });
+    req.checkBody('discount', 'Discount must be a number greater than 0!').isInt({ gt: 0 });
+    //Get errors
+    let errors = req.validationErrors();
+    if(errors) {
+        res.render('add-product', {
+            errors: errors
+        });
+    } else {
+        product.image = req.file.path;
+        product.save((err) => {
+            if(err) {
+                console.log(err);
+            } else {
+                req.flash('success', 'Product Added!');
+                res.redirect('/admin/products/manage-products');
+            }
+        });
+    }
 });
 
 module.exports = router;

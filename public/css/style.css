@@ -29,3 +29,26 @@ body {
     border-radius: 5px;
 }
 
+.input-label {
+    color: #ffff00;
+}
+
+.custom-navbar {
+    background-color: rgba(255, 255,0,0.7) !important;
+}
+
+.nav-link-custom {
+    color: #660033 !important;
+    font-weight: 600;
+}
+
+.nav-link-custom:hover {
+    background:rgba(0, 0,0,0.6);
+    color: #ffff00 !important;
+}
+
+/* Custom buttons */
+.custom-btn {
+    background-color: rgba(255, 255,0,0.3) !important;
+    font-weight: 400;
+}

@@ -1,0 +1,30 @@
+extends layout
+
+block content    
+
+    .container
+        h1.main-title #{title}
+        hr
+        form(method='POST', action='/user/register', enctype='multipart/form-data')
+            .form-group
+                label.input-label(for='name') Name
+                input#title.form-control(type='text', placeholder='User Name', name='name')
+            .form-group
+                label.input-label(for='email') E-mail
+                input#price.form-control(type='email', placeholder='User Email', name='email')
+            .form-group
+                label.input-label(for='password') Password
+                input#price.form-control(type='password', placeholder='User Password', name='password')             
+            .form-group
+                label.input-label(for='image') Image
+                input#image.form-control(type='file', placeholder='User Image', name='image')
+            .form-group#previewImg
+                label.input-label(for='') Image Preview
+                br
+                img#preview(src="", alt="" style="width:150px; height:auto;")
+            .form-group.d-none#removeImg
+                button.btn.btn-danger.btn-sm(type="button") Remove Image
+            br
+            .form-group
+                button.btn.btn-success(type='submit') Register User
+
