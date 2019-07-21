@@ -16,7 +16,8 @@ router.get('/', (req, res, next) => {
         res.render('products', {
             title: 'Pick a Coffee for YOU',
             products: products,
-            isLogged: isLogged
+            isLogged: isLogged,
+            active_page: 'products'
         });
     }).catch(err => {
         console.log(err);
@@ -33,7 +34,8 @@ router.get('/:id', (req, res, next) => {
                 title: product.title,
                 product: product,
                 products: products,
-                isLogged: isLogged
+                isLogged: isLogged,
+                active_page: 'products'
             });
         }).catch(err => {
             console.log(err);
@@ -41,6 +43,22 @@ router.get('/:id', (req, res, next) => {
     }).catch(err => {
         console.log(err);
     })
+});
+
+router.post('/search', (req, res, next) => {   
+    const token = cookieExtractor(req);
+    let search = req.body.search;
+    const isLogged = auth(token);
+    Product.find({title: { '$regex': '.*' + search + '.*', '$options': 'i' } }).then(results => {
+        console.log(results);
+        res.render('results', {
+            title: 'Results for ' + search,
+            results: results,
+            isLogged: isLogged
+        });
+    }).catch(err => {
+        console.log(err);
+    });
 });
 
 cookieExtractor = (req) => {

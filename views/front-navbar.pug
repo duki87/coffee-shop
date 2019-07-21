@@ -1,27 +1,29 @@
 nav.navbar.navbar-expand-lg.navbar-light.bg-light.custom-navbar
-        a.navbar-brand(href='#') Coffee Shop
+        a.navbar-brand(href='/') 
+            img(src='/img/cc.png', style='width:30px; margin-bottom:5px')    
+            span Coffee Shop       
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
 
         #navbarSupportedContent.collapse.navbar-collapse
             ul.navbar-nav.mr-auto
-                li.nav-item.active
-                    a.nav-link.nav-link-custom(href='/')
-                        | Home 
+                li.nav-item
+                    a.nav-link(class=(active_page === "index" ? "nav-link-custom-active" : 'nav-link-custom') href='/')
+                        <i class="fas fa-home"></i> Home 
                     span.sr-only (current)
                 li.nav-item
-                    a.nav-link.nav-link-custom(href='/products') Pick a Coffee
+                    a.nav-link.nav-link-custom(class=(active_page === "products" ? "nav-link-custom-active" : 'nav-link-custom') href='/products') <i class="fas fa-coffee"></i> Pick a Coffee
                 
                 if !isLogged
                     li.nav-item
-                        a.nav-link.nav-link-custom(href='/user/login') Login
+                        a.nav-link.nav-link-custom(class=(active_page === "login" ? "nav-link-custom-active" : 'nav-link-custom') href='/user/login') Login
                     li.nav-item
                         a.nav-link.disabled(href='/cart') <i class="fas fa-shopping-cart"></i> Cart
                 else
                     li.nav-item
-                        a.nav-link.nav-link-custom(href='/cart') <i class="fas fa-shopping-cart"></i> Cart  
+                        a.nav-link.nav-link-custom(class=(active_page === "cart" ? "nav-link-custom-active" : 'nav-link-custom') href='/cart') <i class="fas fa-shopping-cart"></i> Cart  
                     li.nav-item
-                        a.nav-link.nav-link-custom(href='/user') <i class="fas fa-user"></i> Profile
-            form.form-inline.my-2.my-lg-0
-                input.form-control.mr-sm-2(type='search', placeholder='Look for a coffee...', aria-label='Search')
-                button.btn.btn-outline-warning.my-2.my-sm-0(type='submit') Search
+                        a.nav-link.nav-link-custom(class=(active_page === "profile" ? "nav-link-custom-active" : 'nav-link-custom') href='/user') <i class="fas fa-user"></i> Profile
+            form.form-inline.my-2.my-lg-0(action='/products/search', method='post')
+                input.form-control.mr-sm-2.custom-search(type='search', placeholder='Look for a coffee...', name='search', aria-label='Search')
+                button.btn.btn-outline-warning.my-2.my-sm-0.custom-btn2(type='submit') Search

@@ -36,7 +36,7 @@ $(document).ready(function() {
         }); 
     }); */
 
-    $(document).on('submit', '#', function(e) {
+    /* $(document).on('submit', '#', function(e) {
         e.preventDefault();
         var data = new FormData();   
         let email = $('#email').val();
@@ -60,6 +60,6 @@ $(document).ready(function() {
                 console.log(err);
             }
         });
-    });
+    }); */
 
 });

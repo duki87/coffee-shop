@@ -9,7 +9,8 @@ router.get('/', (req, res, next) => {
     const isLogged = auth(token);
     res.render('index', {
         title: 'Welcome to Coffee shop!',
-        isLogged: isLogged
+        isLogged: isLogged,
+        active_page: 'index'
     });
 });
 

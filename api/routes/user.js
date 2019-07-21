@@ -47,19 +47,22 @@ router.get('/', passport.authenticate('jwt', {
         res.render('user-profile', {
             title: 'Profile of user ' + req.user.name,
             userData: req.user,
-            isLogged: isLogged
+            isLogged: isLogged,
+            active_page: 'profile'
         });
 });
 
 router.get('/register', (req, res, next) => {
     res.render('register-user', {
         title: 'Register New User',
+        active_page: 'register'
     });
 });
 
 router.get('/login', (req, res, next) => {
     res.render('login-user', {
         title: 'User Login',
+        active_page: 'login'
     });
 });
 

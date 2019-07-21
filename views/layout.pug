@@ -1,7 +1,13 @@
 doctype html
 html
     head
-        title Coffee Shop
+        meta(charset='UTF-8')
+        meta(name='description', content='Coffee shop - buy coffee for you and your friends!')
+        meta(name='keywords', content='coffee shop')
+        meta(name='author', content='Dusan Marinkovic')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        title Coffee Shop       
+        link(rel='icon', href='/img/cc.png')
         link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
         link(rel='stylesheet' href='/css/style.css')
         link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css') 
@@ -15,8 +21,7 @@ html
         block content       
         br
         hr
-        footer
-            p Copyright &copy; Coffee Shop, 2019. All Rights Reserved
+        include front-footer.pug
         script(src='/bower_components/jquery/dist/jquery.js')
         script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
         script(src='/js/app.js')
