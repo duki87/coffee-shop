@@ -27,3 +27,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.custom-navbar
             form.form-inline.my-2.my-lg-0(action='/products/search', method='post')
                 input.form-control.mr-sm-2.custom-search(type='search', placeholder='Look for a coffee...', name='search', aria-label='Search')
                 button.btn.btn-outline-warning.my-2.my-sm-0.custom-btn2(type='submit') Search
+            if isLogged
+                ul.navbar-nav
+                    li.nav-item
+                        a.btn.btn-outline-warning.my-2.my-sm-0.custom-btn2.ml-2(href='/user/logout') <i class="fas fa-sign-out-alt"></i> Logout

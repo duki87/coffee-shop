@@ -16,30 +16,33 @@ block content
                             th(scope='col') Sub Total
                             th.text-center(scope='col') Delete Item
                     tbody
+                        - var total = 0;
+                        each order, i in cart
+                            - total += order.subtotal
+                            tr(id= order._id)
+                                th(scope='row')
+                                    p.font-weight-bold= i+1
+                                td(style='')
+                                    p.font-weight-bold= order.productId.title
+                                td 
+                                    p.font-weight-bold.text-center= order.productId.price
+                                td.text-center
+                                    button.increaseQty.btn.btn-outline-secondary.btn-sm(type='button', data-orderId=order._id) - 
+                                    span &nbsp;
+                                    p.font-weight-bold.text-center.d-inline= order.quantity
+                                    span &nbsp;
+                                    button.decreaseQty.btn.btn-outline-secondary.btn-sm(type='button', data-orderId=order._id) +
+                                td 
+                                    p.font-weight-bold.text-center= order.subtotal
+                                td.text-center
+                                    button.removeFromCart.btn.btn-outline-danger(type='button', data-orderId=order._id) X
                         tr
-                            th(scope='row') 1
-                            td Mark
-                            td Otto
-                            td @
-                            td @mdo
+                            td
+                            th(scope='col', colspan='3') Total
+                            td
+                                p.font-weight-bold.text-center= Math.round(total * 100) / 100
                             td.text-center
-                                button.btn.btn-outline-danger X
-                        tr
-                            th(scope='row') 2
-                            td Jacob
-                            td Thornton
-                            td @fat
-                            td @mdo
-                            td.text-center 
-                                button.btn.btn-outline-danger X
-                        tr
-                            th(scope='row') 3
-                            td(colspan='2') Larry the Bird
-                            td @twitter
-                            td @mdo
-                            td.text-center
-                                button.btn.btn-outline-danger X
                 br
                 button.btn.btn-outline-warning.custom-btn Check Out
-                button.btn.btn-outline-danger.custom-btn.ml-2 Delete All
-                
+                a.removeCart.btn.btn-outline-danger.custom-btn.ml-2(type='button', href='/cart/remove-cart') Delete Cart
+    

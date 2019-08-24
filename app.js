@@ -64,6 +64,7 @@ const adminRoutes = require('./api/routes/admin');
 const indexRoutes = require('./api/routes/index');
 const cartRoutes = require('./api/routes/cart');
 const userRoutes = require('./api/routes/user');
+const orderRoutes = require('./api/routes/order');
 
 //Load view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -99,5 +100,6 @@ app.use('/admin/products', adminProductRoutes);
 app.use('/products',  productRoutes);
 app.use('/cart', cartRoutes);
 app.use('/user', userRoutes);
+app.use('/order', orderRoutes);
 
 module.exports = app;

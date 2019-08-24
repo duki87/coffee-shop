@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    
     $(document).on('change', '#image', function(e) {
         e.preventDefault();
         $('#removeImg').toggleClass('d-none');
@@ -11,6 +12,29 @@ $(document).ready(function() {
         $('#removeImg').toggleClass('d-none');  
         $('#preview').attr('src', '');
         $('#image').val('');
+    });
+
+    $(document).on('click', '.removeFromCart', function(e) {
+        e.preventDefault();
+        let orderId = $(this).attr('data-orderId');
+        var data = new FormData();
+        data.append('orderId', orderId);
+        $.ajax({           
+            url: '/cart/remove-order/'+orderId,
+            method: 'GET',
+            processData: false,
+            success: function(res) {
+                console.log(res.message);
+                if(res.message == 'EMPTY') {
+                    window.location.href = '/';
+                } else {
+                    $('#'+orderId).remove();
+                }              
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        }); 
     });
 
 /*     $(document).on('click', '.addToCart', function(e) {

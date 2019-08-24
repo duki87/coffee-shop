@@ -127,6 +127,13 @@ footer {
     font-weight: 400;
 }
 
+.btn-xs {
+    width: 30px;
+    height: 20px;
+    border: 1px red solid;
+    border-radius: 5px;
+}
+
 @media only screen and (max-width: 600px) {
     .footer-img {
         max-width: 40%; 

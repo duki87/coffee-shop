@@ -173,4 +173,10 @@ router.post('/register', upload.single('image'), (req, res, next) => {
     });
 });
 
+router.get('/logout', (req, res, next) => {
+    res.clearCookie('jwt');
+    res.clearCookie('cart');
+    res.redirect('/');
+});
+
 module.exports = router;

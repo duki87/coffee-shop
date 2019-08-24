@@ -17,11 +17,24 @@ router.get('/', passport.authenticate('jwt', {
     //console.log(req.user._id);
     const token = cookieExtractor(req);
     const isLogged = auth(token);
-    res.render('cart', {
-        title: 'Your Shopping Cart',
-        isLogged: isLogged,
-        active_page: 'cart'
-    });
+    let cookie = cookieCartExtractor(req);
+    if(cookie) {
+        var cartId = (JSON.parse(cookie)).cartId;
+    }
+    Order.find({cartId: cartId})
+        .populate({path:'cartId'})
+        .populate({path:'productId'}).exec()
+        .then(cart => {
+            console.log(cart);
+            res.render('cart', {
+                title: 'Your Shopping Cart',
+                isLogged: isLogged,
+                active_page: 'cart',
+                cart: cart
+            });
+        }).catch(err => {
+            console.log(err);
+        });
 });
 
 router.post('/add-to-cart', passport.authenticate('jwt', {
@@ -29,7 +42,6 @@ router.post('/add-to-cart', passport.authenticate('jwt', {
     failureRedirect: '/user/login',
     failureFlash: true
 }), (req, res, next) => {
-    //console.log(req.user._id);
     let userId = req.user._id;
     let cookie = cookieCartExtractor(req);
     let productId = req.body.productId;
@@ -141,6 +153,50 @@ router.post('/add-to-cart', passport.authenticate('jwt', {
             });
         });        
     }
+});
+
+router.get('/remove-order/:id', passport.authenticate('jwt', {
+    session: false,
+    failureRedirect: '/user/login',
+    failureFlash: true
+}), (req, res, next) => { 
+    Order.findByIdAndDelete(req.params.id, (err, deleted) => {
+        if(err) throw err;
+        let cookie = cookieCartExtractor(req);
+        let cartId = (JSON.parse(cookie)).cartId;
+        Order.find({cartId: cartId}, (err, cart) => {
+            if(err) throw err;
+            if(cart.length < 1) {
+                Cart.findByIdAndDelete(cartId, (err, deleted) => {
+                    if(err) throw err;
+                    console.log(deleted._id)
+                    res.clearCookie('cart');
+                    res.json({message: 'EMPTY'});
+                });
+            } else {
+                res.json({message: 'REMOVED'});
+            }
+        });
+        //res.redirect(req.get('referer'));
+    })
+});
+
+router.get('/remove-cart', passport.authenticate('jwt', {
+    session: false,
+    failureRedirect: '/user/login',
+    failureFlash: true
+}), (req, res, next) => { 
+    let cookie = cookieCartExtractor(req);
+    let cartId = (JSON.parse(cookie)).cartId;
+    Order.deleteMany({cartId: cartId}, (err, deleted) => {
+        if(err) throw err;
+        Cart.findByIdAndDelete(cartId, (err, cart) => {
+            if(err) throw err;
+            res.clearCookie('cart');
+            res.redirect('/');
+        });
+        //res.redirect(req.get('referer'));
+    })
 });
 
 cookieExtractor = (req) => {
