@@ -17,6 +17,7 @@ $(document).ready(function() {
     $(document).on('click', '.removeFromCart', function(e) {
         e.preventDefault();
         let orderId = $(this).attr('data-orderId');
+        let elem = $(this);
         var data = new FormData();
         data.append('orderId', orderId);
         $.ajax({           
@@ -28,6 +29,8 @@ $(document).ready(function() {
                 if(res.message == 'EMPTY') {
                     window.location.href = '/';
                 } else {
+                    let subtotal = parseFloat('-'+elem.closest('td').parent().find('.subtotal').text());
+                    updateTotal(subtotal);
                     $('#'+orderId).remove();
                 }              
             },
@@ -37,53 +40,60 @@ $(document).ready(function() {
         }); 
     });
 
-/*     $(document).on('click', '.addToCart', function(e) {
+    $(document).on('click', '.plus', function(e) {
         e.preventDefault();
-        let id = $(this).attr('data-coffeeId');
-        console.log(id)
-        var data = new FormData();
-        //var cartId = sessionStorage.getItem('cart');        
-        data.append('productId', id);
-        //data.append('cartId', cartId);
-        $.ajax({           
-            url: '/cart/add-to-cart',
-            method: 'POST',
-            data: data,
-            processData: false,
-            //contentType: false,
-            success: function(res) {
-                console.log(res);
-            },
-            error: function(err) {
-                console.log(err);
-            }
-        }); 
-    }); */
+        let orderId = $(this).attr('data-orderId');
+        let elem = $(this).closest('td').find('.quantity');
+        let quantity = parseInt(elem.html());
+        quantity++;
+        let update = updateQuantity(orderId, quantity, elem);
+    });
 
-    /* $(document).on('submit', '#', function(e) {
+    $(document).on('click', '.minus', function(e) {
         e.preventDefault();
-        var data = new FormData();   
-        let email = $('#email').val();
-        let password = $('#password').val();
-        data.append('email', email);
-        data.append('password', password);
+        let elem = $(this).closest('td').find('.quantity');
+        let quantity = parseInt(elem.html());
+        quantity--; 
+        let orderId = $(this).attr('data-orderId');
+        $(this).closest('td').find('.quantity').html(quantity);
+        updateQuantity(orderId, quantity, elem);      
+    });
+
+    $(document).on('change', '.currentQty', function(e) {
+        e.preventDefault();
+        console.log($(this).val());
+    });
+
+    function updateQuantity(orderId, quantity, elem) {
         $.ajax({           
-            url: '/user/login',
-            method: 'POST',
-            data: data,
+            url: '/cart/updateQuantity/'+orderId,
+            type: 'PUT',
+            data: JSON.stringify({quantity: quantity}),
+            contentType: 'application/json',
             processData: false,
-            contentType: false,
             success: function(res) {
-                if(res.token) {
-                    localStorage.setItem('token', res.token);
-                    //window.location.href = "http://localhost:3000/user"; 
-                    redirectToProtectedRoutes('user');                
-                }
+                elem.html(quantity);  
+                elem.closest('td').find('.currentQty').val(quantity);  
+                updateSubtotal(elem, quantity);       
             },
             error: function(err) {
                 console.log(err);
             }
         });
-    }); */
+    }
 
+    function updateSubtotal(elem, quantity) {
+        let price = parseFloat(elem.closest('td').parent().find('.price').text());
+        let subtotal = elem.closest('td').parent().find('.subtotal');
+        let newSubtotal = parseFloat(quantity * price).toFixed(2);
+        let dif = newSubtotal - parseFloat(subtotal.text());
+        subtotal.text(newSubtotal);
+        updateTotal(dif);
+    }
+
+    function updateTotal(dif) {
+        let total = parseFloat($('#total').text());
+        let newTotal = parseFloat(total + dif).toFixed(2);
+        $('#total').text(newTotal);
+    }
 });

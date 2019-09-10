@@ -5,42 +5,43 @@ block content
     .container
         h1.main-title #{title}
         .row
-            .col-md-8.mx-auto.my-5
+            .col-md-12.mx-auto.my-5
                 table.table.table-hover(style='background-color: rgba(255, 255, 0, 0.7)')
                     thead
                         tr
-                            th(scope='col') #
-                            th(scope='col') Product
-                            th(scope='col') Price
-                            th(scope='col') Quantity
-                            th(scope='col') Sub Total
-                            th.text-center(scope='col') Delete Item
+                            th.text-center(scope='col', width='5%') #
+                            th(scope='col', width='25%') Product
+                            th.text-center(scope='col', width='10%') Price
+                            th.text-center(scope='col', width='20%') Quantity
+                            th.text-center(scope='col', width='20%') Sub Total
+                            th.text-center(scope='col', width='20%') Delete Item
                     tbody
                         - var total = 0;
                         each order, i in cart
                             - total += order.subtotal
-                            tr(id= order._id)
+                            tr.my-auto(id= order._id)
                                 th(scope='row')
                                     p.font-weight-bold= i+1
                                 td(style='')
                                     p.font-weight-bold= order.productId.title
                                 td 
-                                    p.font-weight-bold.text-center= order.productId.price
+                                    p.font-weight-bold.text-center.price= order.productId.price
                                 td.text-center
-                                    button.increaseQty.btn.btn-outline-secondary.btn-sm(type='button', data-orderId=order._id) - 
-                                    span &nbsp;
-                                    p.font-weight-bold.text-center.d-inline= order.quantity
-                                    span &nbsp;
-                                    button.decreaseQty.btn.btn-outline-secondary.btn-sm(type='button', data-orderId=order._id) +
+                                        button.increaseQty.btn.btn-outline-secondary.btn-sm.minus(type='button', data-orderId=order._id) - 
+                                        span &nbsp;
+                                        input.currentQty(type='hidden', value=order.quantity)
+                                        p.font-weight-bold.text-center.d-inline.quantity= order.quantity
+                                        span &nbsp;
+                                        button.decreaseQty.btn.btn-outline-secondary.btn-sm.plus(type='button', data-orderId=order._id) +
                                 td 
-                                    p.font-weight-bold.text-center= order.subtotal
+                                    p.font-weight-bold.text-center.subtotal= order.subtotal.toFixed(2)
                                 td.text-center
                                     button.removeFromCart.btn.btn-outline-danger(type='button', data-orderId=order._id) X
                         tr
                             td
                             th(scope='col', colspan='3') Total
                             td
-                                p.font-weight-bold.text-center= Math.round(total * 100) / 100
+                                p.font-weight-bold.text-center#total= total.toFixed(2)
                             td.text-center
                 br
                 button.btn.btn-outline-warning.custom-btn Check Out

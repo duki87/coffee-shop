@@ -199,6 +199,43 @@ router.get('/remove-cart', passport.authenticate('jwt', {
     })
 });
 
+router.put('/updateQuantity/:id', passport.authenticate('jwt', {
+    session: false,
+    failureRedirect: '/user/login',
+    failureFlash: true
+}), (req, res, next) => { 
+    let cookie = cookieCartExtractor(req);
+    let orderId = req.params.id;
+    let quantity = req.body.quantity;
+    Order.findById(orderId, (err, order) => {
+        if(err) throw err;
+        Product.findById(order.productId, (err, product) => {
+            if(err) throw err;
+            order.quantity = quantity;
+            order.subtotal = quantity * product.price;
+            if(order.save()) {
+                res.status(201).send({'message': 'updated'});
+            }
+        });
+    });
+});
+
+router.get('/aaaaa/:id', passport.authenticate('jwt', {
+    session: false,
+    failureRedirect: '/user/login',
+    failureFlash: true
+}), (req, res, next) => { 
+    let cookie = cookieCartExtractor(req);
+    let orderId = req.params.id;
+    console.log(orderId);
+
+/*     Order.findById(orderId, (err, order) => {
+        if(err) throw err;
+        order.quantity = quantity;
+        order.save();
+    }); */
+});
+
 cookieExtractor = (req) => {
     var extracted = null;
     if (req && req.cookies) extracted = req.cookies['jwt'];
