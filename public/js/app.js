@@ -64,6 +64,18 @@ $(document).ready(function() {
         console.log($(this).val());
     });
 
+    $(document).on('change', '#profileImage', function(e) {
+        e.preventDefault();
+        $('#savePhotoButton').removeClass('d-none');
+        var url = URL.createObjectURL(e.target.files[0]);  
+        $('#preview').attr('src', url);        
+    });
+
+    $(document).on('click', '#changePhotoButton', function() { 
+        //$('#savePhotoButton').removeClass('d-none');
+        $('#profileImage').trigger('click');         
+    });
+
     function updateQuantity(orderId, quantity, elem) {
         $.ajax({           
             url: '/cart/updateQuantity/'+orderId,

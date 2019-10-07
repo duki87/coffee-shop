@@ -20,8 +20,12 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.custom-navbar
                     li.nav-item
                         a.nav-link.disabled(href='/cart') <i class="fas fa-shopping-cart"></i> Cart
                 else
-                    li.nav-item
-                        a.nav-link.nav-link-custom(class=(active_page === "cart" ? "nav-link-custom-active" : 'nav-link-custom') href='/cart') <i class="fas fa-shopping-cart"></i> Cart  
+                    if cart_exist
+                        li.nav-item
+                            a.nav-link.nav-link-custom(class=(active_page === "cart" ? "nav-link-custom-active" : 'nav-link-custom') href='/cart') <i class="fas fa-shopping-cart"></i> Cart  
+                    else
+                        li.nav-item
+                            a.nav-link.d-none.nav-link-custom(href='/cart') <i class="fas fa-shopping-cart"></i> Cart  
                     li.nav-item
                         a.nav-link.nav-link-custom(class=(active_page === "profile" ? "nav-link-custom-active" : 'nav-link-custom') href='/user') <i class="fas fa-user"></i> Profile
             form.form-inline.my-2.my-lg-0(action='/products/search', method='post')

@@ -18,24 +18,26 @@ module.exports = (passport) => {
         usernameField: 'email',
         passwordField: 'password'
         },
-        function(email, password, cb) {
+        function(email, password, done) {
             //this one is typically a DB call. 
             //Assume that the returned user object is pre-formatted and ready for storing in JWT
-            return User.findOne({email: email}).then(user => {
-                if(user === null) {
-                    return cb({message: 'Wrong email. User with entered email does not exist.'}, false);
+            return User.findOne({email: email}, (err, user) => {
+                if(err) {
+                    return done(err);
+                }
+                if (!user) {
+                    return done(null, false, {message: 'User with this email does not exist. Please try again.'});
                 }
                 // Load hash from your password DB.
                 bcrypt.compare(password, user.password, function(err, pass) {
                     if(!pass) {
-                        return cb({message: 'Wrong password.'}, false);
+                        return done(null, false, {message: 'Wrong password. Please try again.'});
                     } else {
                         //const token = jwt.sign({_id: user._id}, 'gigi');
-                        return cb(null, user, {message: 'Logged In Successfully'});               
+                        return done(null, user, {message: `Welcome, ${user.name}`});               
                     }
-                });
-                
-            }).catch(err => cb(err));
+                });            
+            });
         }
     ));
 

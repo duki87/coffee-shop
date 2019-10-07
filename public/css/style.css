@@ -141,6 +141,10 @@ footer {
     border: 0.5px solid grey;
 }
 
+#editProfileModal {
+    background-color: rgba(0,0,0,0.6) !important;
+}
+
 @media only screen and (max-width: 600px) {
     .footer-img {
         max-width: 40%; 

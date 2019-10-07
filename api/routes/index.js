@@ -2,22 +2,8 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const auth = require('../../config/auth');
+const controller = require('../controllers/index');
 
-router.get('/', (req, res, next) => {
-    const token = cookieExtractor(req);
-    const isLogged = auth(token);
-    res.render('index', {
-        title: 'Welcome to Coffee shop!',
-        isLogged: isLogged,
-        active_page: 'index'
-    });
-});
-
-cookieExtractor = (req) => {
-    var extracted = null;
-    if (req && req.cookies) extracted = req.cookies['jwt'];
-    return extracted;
-};   
+router.get('/', controller.homepage);
 
 module.exports = router;
